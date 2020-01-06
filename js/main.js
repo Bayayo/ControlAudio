@@ -3,10 +3,27 @@
 var reproduccion = document.getElementById("player");
 var segs = 5;
 
+reproduccion.buffered.end(segs);
+
+reproduccion.addEventListener('progress', function() {
+    if (segs > 0) {
+      for (var i = 0; i < reproduccion.buffered.length; i++) {
+            if (reproduccion.buffered.start(reproduccion.buffered.length - 1 - i) < reproduccion.currentTime) {
+                document.getElementById("buffered-amount").style.width = (reproduccion.buffered.end(reproduccion.buffered.length - 1 - i) / duration) * 100 + "%";
+                break;
+            }
+        }
+    }
+  });
+
 reproduccion.addEventListener('timeupdate', function() {
+
     var tiempo = reproduccion.currentTime;
     reproduccion.setAttribute('data-time', segs);
     
+    if (tiempo > 0) {
+        document.getElementById('progress-amount').style.width = ((reproduccion.currentTime / segs )*100) + "%";
+    }
 
     if (tiempo > segs -2) {
         Fade();
@@ -21,20 +38,17 @@ reproduccion.addEventListener('timeupdate', function() {
 
 function Fade () {
 
-    console.log('ok');
-    var fadePoint = reproduccion.duration - 2; 
+    var fadePoint = segs - 2; 
 
     var fadeAudio = setInterval(function () {
-
-        // Only fade if past the fade out point or not at zero already
-        if ((reproduccion.currentTime >= fadePoint) && (reproduccion.volume != 0.0)) {
+        if ((reproduccion.currentTime >= fadePoint) && (reproduccion.volume != 0.1)) {
             reproduccion.volume -= 0.1;
-        }
-        // When volume at zero stop all the intervalling
-        if (reproduccion.volume === 0.0) {
             clearInterval(fadeAudio);
         }
-    }, 20);
+        if (reproduccion.volume === 0.1) {
+            clearInterval(fadeAudio);
+        }
+    }, 200);
 
 }
 
