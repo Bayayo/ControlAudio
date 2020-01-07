@@ -1,56 +1,86 @@
-(function audio(){
+(function reproductor(){
+
+var segs = 5;
 
 var reproduce = false;
-var reproduccion = document.getElementById("player");
+var musica = document.getElementById("player");
 var play = document.getElementById("btn-play");
-var segs = 20;
+var stop = document.getElementById("btn-stop");
+
 
 play.onclick = function() { 
 
-    reproduce = reproduce ? false : true;
-    revisaPlay();
-
-};
-
-revisaPlay = function(){
-
-    if(reproduce){
-        reproduccion.play();
+    if(!reproduce){
+        musica.play();
+        reproduce = reproduce ? false : true;
         $(play).attr("class", "fas fa-pause-circle");
+        console.log(reproduce);
     } 
-    if(!reproduce) {
-        reproduccion.stop();
+    else if(reproduce) {
+        musica.pause();
+        reproduce = reproduce ? false : true;
         $(play).attr("class", "fas fa-play-circle");
+        console.log(reproduce);
     }
+
 };
 
-reproduccion.addEventListener('progress', function() {
+stop.onclick = function(){
+
+    reproduce = false;
+
+    $(play).attr("class", "fas fa-play-circle");
+    document.getElementById("progreso").style.width = 0;
+    musica.volume =  1;
+    musica.pause();
+    musica.currentTime = 0;
+
+};
+
+
+
+musica.addEventListener('progress', function() {
     if (segs > 0) {
-      for (var i = 0; i < reproduccion.buffered.length; i++) {
-            if (reproduccion.buffered.start(reproduccion.buffered.length - 1 - i) < reproduccion.currentTime) {
-                document.getElementById("objAudio").style.width = (reproduccion.buffered.end(reproduccion.buffered.length - 1 - i) / duration) * 100 + "%";
+      for (var i = 0; i < musica.buffered.length; i++) {
+            if (musica.buffered.start(musica.buffered.length - 1 - i) < musica.currentTime) {
+                document.getElementById("objAudio").style.width = (musica.buffered.end(musica.buffered.length - 1 - i) / duration) * 100 + "%";
                 break;
             }
         }
     }
-  });
+});
 
-reproduccion.addEventListener('timeupdate', function() {
+musica.addEventListener('timeupdate', function() {
 
-    var tiempo = reproduccion.currentTime;
-    reproduccion.setAttribute('data-time', segs);
-    
+    var tiempo = musica.currentTime;
+
+    function formatTime(tiempo) {
+        minutes = Math.floor(tiempo / 60);
+        minutes = (minutes >= 10) ? minutes : "0" + minutes;
+        tiempo = Math.floor(tiempo % 60);
+        tiempo = (tiempo >= 10) ? tiempo : "0" + tiempo;
+        return minutes + ":" + tiempo;
+    }
+    cancion.innerHTML = $("#nombre").attr('src').replace("./audio/",'').slice(0,-4);
+    transcurrido.innerHTML = formatTime(tiempo);
+    duracion.innerHTML = formatTime(segs);
+    musica.setAttribute('data-time', segs);
+
     if (tiempo > 0) {
-        document.getElementById('progreso').style.width = ((reproduccion.currentTime / segs )*100) + "%";
+        document.getElementById('progreso').style.width = ((musica.currentTime / segs )*100) + "%";
     }
 
     if (tiempo >= segs - 2) {
         Fade();
-    }
+    } 
+    if (tiempo > segs ) {
+        reproduce = false;
+        musica.pause();
+        musica.volume =  1;
+        musica.currentTime = 0;
+        document.getElementById("progreso").style.width = 0;
 
-    if (tiempo >= segs ) {
-        console.log(reproduccion.currentTime);
-        reproduccion.pause();
+        $(play).attr("class", "fas fa-play-circle");
         
     }
 
@@ -58,24 +88,19 @@ reproduccion.addEventListener('timeupdate', function() {
 
 function Fade () {
 
-    var fadePoint = segs - 2; 
+    var fadePoint = segs - 2.5; 
 
     var fadeAudio = setInterval(function () {
-        if ((reproduccion.currentTime >= fadePoint) && (reproduccion.volume != 0.1)) {
-            reproduccion.volume -= 0.1;
+        if ((musica.currentTime >= fadePoint) && (musica.volume != 0.1)) {
+            musica.volume -= 0.1;
             clearInterval(fadeAudio);
         }
-        if (reproduccion.volume === 0.1) {
+        else if(musica.volume === 0.1) {
             clearInterval(fadeAudio);
-            $(play).attr("class", "fas fa-play-circle");
         }
     }, 200);
-
 }
 
-function stop(){
-
-}
 
 })();
 
