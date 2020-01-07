@@ -14,23 +14,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.0.4/gsap.min.js"></script>
 
-
 </head>
 <body>
 
     <header>"Manejo de pistas de audio con duración editable"</header>
 
-    <div class="objAudio" >
-        <div class="btnPlay fas fa-play-circle" id="btn-play"></div>
-        <div id="cancion">Canción</div>
-        <audio preload="none" id="player">
-                <source id="nombre" src="./audio/demo.mp3" type="audio/mpeg">
-        </audio>
-        <div class="far fa-stop-circle" id="btn-stop"></div>
-        <div id="tiempos"><span id="transcurrido">00:00</span> / <span id="duracion">00:00</span></div>
-        <div id="progreso"></div>
-    </div>
+    <div class="contenedor">
 
+        <div class="objAudio" >
+            <div class="btnPlay fas fa-play-circle" id="btn-play"></div>
+            <div id="cancion"></div>
+            <audio preload="none" id="player">
+                    <source id="nombre" src="./audio/demo.mp3" type="audio/mpeg">
+            </audio>
+            <div class="far fa-stop-circle" id="btn-stop"></div>
+            <div id="tiempos"><span id="transcurrido">00:00</span> / <span id="duracion">00:00</span></div>
+            <div class="progreso"><div id="progreso"></div></div>
+        </div>
+
+    </div>
     
 </body>
     <script src="./js/main.js"></script>

@@ -4,6 +4,7 @@ var segs = 5;
 
 var reproduce = false;
 var musica = document.getElementById("player");
+var nombre = document.getElementById("nombre");
 var play = document.getElementById("btn-play");
 var stop = document.getElementById("btn-stop");
 
@@ -61,7 +62,7 @@ musica.addEventListener('timeupdate', function() {
         tiempo = (tiempo >= 10) ? tiempo : "0" + tiempo;
         return minutes + ":" + tiempo;
     }
-    cancion.innerHTML = $("#nombre").attr('src').replace("./audio/",'').slice(0,-4);
+ 
     transcurrido.innerHTML = formatTime(tiempo);
     duracion.innerHTML = formatTime(segs);
     musica.setAttribute('data-time', segs);
@@ -100,6 +101,14 @@ function Fade () {
         }
     }, 200);
 }
+
+(function(){
+    //Nombre de las canciones 
+    var m = $(nombre).attr('src').lastIndexOf("/");
+    var nArchivo = $(nombre).attr('src').slice(m + 1,-4);
+
+    cancion.innerHTML = nArchivo;
+})();
 
 
 })();
