@@ -1,15 +1,34 @@
 (function audio(){
 
+var reproduce = false;
 var reproduccion = document.getElementById("player");
-var segs = 5;
+var play = document.getElementById("btn-play");
+var segs = 20;
 
-reproduccion.buffered.end(segs);
+play.onclick = function() { 
+
+    reproduce = reproduce ? false : true;
+    revisaPlay();
+
+};
+
+revisaPlay = function(){
+
+    if(reproduce){
+        reproduccion.play();
+        $(play).attr("class", "fas fa-pause-circle");
+    } 
+    if(!reproduce) {
+        reproduccion.stop();
+        $(play).attr("class", "fas fa-play-circle");
+    }
+};
 
 reproduccion.addEventListener('progress', function() {
     if (segs > 0) {
       for (var i = 0; i < reproduccion.buffered.length; i++) {
             if (reproduccion.buffered.start(reproduccion.buffered.length - 1 - i) < reproduccion.currentTime) {
-                document.getElementById("buffered-amount").style.width = (reproduccion.buffered.end(reproduccion.buffered.length - 1 - i) / duration) * 100 + "%";
+                document.getElementById("objAudio").style.width = (reproduccion.buffered.end(reproduccion.buffered.length - 1 - i) / duration) * 100 + "%";
                 break;
             }
         }
@@ -22,16 +41,17 @@ reproduccion.addEventListener('timeupdate', function() {
     reproduccion.setAttribute('data-time', segs);
     
     if (tiempo > 0) {
-        document.getElementById('progress-amount').style.width = ((reproduccion.currentTime / segs )*100) + "%";
+        document.getElementById('progreso').style.width = ((reproduccion.currentTime / segs )*100) + "%";
     }
 
-    if (tiempo > segs -2) {
+    if (tiempo >= segs - 2) {
         Fade();
     }
 
-    if (tiempo > segs ) {
-        reproduccion.pause();
+    if (tiempo >= segs ) {
         console.log(reproduccion.currentTime);
+        reproduccion.pause();
+        
     }
 
 });
@@ -47,8 +67,13 @@ function Fade () {
         }
         if (reproduccion.volume === 0.1) {
             clearInterval(fadeAudio);
+            $(play).attr("class", "fas fa-play-circle");
         }
     }, 200);
+
+}
+
+function stop(){
 
 }
 

@@ -6,56 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Audio</title>
 
+    <link rel="stylesheet" type="text/css" href="css/track.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.0.4/gsap.min.js"></script>
 
-    <style>
-        .buffered {
-        height: 20px;
-        position: relative;
-        background: #555;
-        width: 300px;
-        }
-
-        #buffered-amount {
-        display: block;
-        height: 100%;
-        background-color: #777;
-        width: 0;
-        }
-
-        .progress {
-        margin-top: -20px;
-        height: 20px;  
-        position: relative;
-        width: 300px;
-        }
-
-        #progress-amount {
-        display: block;
-        height: 100%;
-        background-color: #595;
-        width: 0;
-        }
-    </style>
 
 </head>
 <body>
 
     <div>Audio</div>
 
-    <audio controls preload="none" id="player" controls>
-            <source src="./audio/demo.mp3" type="audio/mpeg">
-    </audio>
-
-    <div class="buffered">
-            <div id="buffered-amount"></div>                
+    <div class="objAudio" >
+        <div class="btnPlay fas fa-play-circle" id="btn-play" onclick="playaud()"></div>
+        <audio preload="none" id="player">
+                <source src="./audio/demo.mp3" type="audio/mpeg">
+        </audio>
+        <div id="progreso"></div>
     </div>
-    <div class="progress">
-         <div id="progress-amount"></div>
-    </div>
-        
-
-
 
     
 </body>
