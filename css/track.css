@@ -52,7 +52,7 @@ header{
     box-shadow: 0px 1px 5px 1px rgba(0,0,0,0.25);
 }
 
-#btn-play{
+.btn-play{
     cursor: pointer;
     font-size: 2em;
     padding: 2%;
@@ -61,11 +61,11 @@ header{
     order: 1;
 }
 
-#btn-play:hover{
+.btn-play:hover{
     color: #03d8f3;
 }
 
-#btn-stop{
+.btn-stop{
     cursor: pointer;
     font-size: 2em;
     padding: 2%;
@@ -75,7 +75,7 @@ header{
     
 }
 
-#btn-stop:hover{
+.btn-stop:hover{
     color: #00BCD4;
 }
 
@@ -92,7 +92,7 @@ header{
     background-color: #00BCD4;
 }
 
-#cancion {
+.cancion {
     font-size: 0.9em;
     color: #0394a7;
     order: 2;
@@ -100,7 +100,7 @@ header{
     overflow: hidden;
 }
 
-#tiempos {
+.tiempos {
     font-size: 0.7em;
     float: right;
     color: #4bafa6;

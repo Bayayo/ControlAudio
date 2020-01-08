@@ -1,65 +1,61 @@
 (function reproductor(){
 
-    var divs = document.getElementsByClassName("objAudio");
+    var track = document.getElementsByClassName("objAudio");
 
-    Object.entries(divs).map(( object ) => {
+    Object.entries(track).map(( object ) => {
 
-        console.log(object[1].children[2]);
         console.log(object);
 
         var segs = 5;
-
         var reproduce = false;
-        var musica = object[1].children[2];
-        var nombre = object[1].children[2].children[0];
-        var play = object[1].children[0];
-        var stop = object[1].children[3];
 
-        play.onclick = function() { 
+        //PLAY
+        object[1].children[0].onclick = function() { 
 
             if(!reproduce){
-                musica.play();
+                object[1].children[2].play();
                 reproduce = reproduce ? false : true;
-                $(play).attr("class", "fas fa-pause-circle");
+                $( object[1].children[0] ).attr("class", "btn-play fas fa-pause-circle");
                 console.log(reproduce);
             } 
             else if(reproduce) {
-                musica.pause();
+                object[1].children[2].pause();
                 reproduce = reproduce ? false : true;
-                $(play).attr("class", "fas fa-play-circle");
+                $( object[1].children[0] ).attr("class", "btn-play fas fa-play-circle");
                 console.log(reproduce);
             }
         
         };
         
-        stop.onclick = function(){
+        //STOP
+        object[1].children[4].onclick = function(){
         
             reproduce = false;
         
-            $(play).attr("class", "fas fa-play-circle");
-            document.getElementById("progreso").style.width = 0;
-            musica.volume =  1;
-            musica.pause();
-            musica.currentTime = 0;
+            $( object[1].children[0] ).attr("class", "btn-play fas fa-play-circle");
+            object[1].children[2].volume =  1;
+            object[1].children[2].pause();
+            object[1].children[2].currentTime = 0;
+            object[1].children[5].children[0].style.width = 0;
         
         };
         
-        
-        
-        musica.addEventListener('progress', function() {
+        //PROGRESO
+        object[1].children[2].addEventListener('progress', function() {
             if (segs > 0) {
-              for (var i = 0; i < musica.buffered.length; i++) {
-                    if (musica.buffered.start(musica.buffered.length - 1 - i) < musica.currentTime) {
-                        document.getElementById("objAudio").style.width = (musica.buffered.end(musica.buffered.length - 1 - i) / duration) * 100 + "%";
+              for (var i = 0; i < object[1].children[2].buffered.length; i++) {
+                    if (object[1].children[2].buffered.start(object[1].children[2].buffered.length - 1 - i) < object[1].children[2].currentTime) {
+                        object[1].children[0].style.width = (object[1].children[2].buffered.end(object[1].children[2].buffered.length - 1 - i) / duration) * 100 + "%";
                         break;
                     }
                 }
             }
         });
         
-        musica.addEventListener('timeupdate', function() {
+        //TIEMPO
+        object[1].children[2].addEventListener('timeupdate', function() {
         
-            var tiempo = musica.currentTime;
+            var tiempo = object[1].children[2].currentTime;
         
             function formatTime(tiempo) {
                 minutes = Math.floor(tiempo / 60);
@@ -68,52 +64,55 @@
                 tiempo = (tiempo >= 10) ? tiempo : "0" + tiempo;
                 return minutes + ":" + tiempo;
             }
-         
-            transcurrido.innerHTML = formatTime(tiempo);
-            duracion.innerHTML = formatTime(segs);
-            musica.setAttribute('data-time', segs);
+            
+            // Duracion
+            object[1].children[3].children[0].innerHTML = formatTime(tiempo);
+            object[1].children[3].children[1].innerHTML = formatTime(segs);
+            object[1].children[2].setAttribute('data-time', segs);
         
             if (tiempo > 0) {
-                document.getElementById('progreso').style.width = ((musica.currentTime / segs )*100) + "%";
+                object[1].children[5].children[0].style.width = ((object[1].children[2].currentTime / segs )*100) + "%";
             }
-        
             if (tiempo >= segs - 2) {
                 Fade();
             } 
             if (tiempo > segs ) {
                 reproduce = false;
-                musica.pause();
-                musica.volume =  1;
-                musica.currentTime = 0;
-                document.getElementById("progreso").style.width = 0;
-        
-                $(play).attr("class", "fas fa-play-circle");
+                object[1].children[2].pause();
+                object[1].children[2].volume =  1;
+                object[1].children[2].currentTime = 0;
+                object[1].children[5].children[0].style.width = 0;
+                $( object[1].children[0] ).attr("class", "btn-play fas fa-play-circle");
                 
             }
         
         });
         
+        //FADE
         function Fade () {
         
             var fadePoint = segs - 2.5; 
         
             var fadeAudio = setInterval(function () {
-                if ((musica.currentTime >= fadePoint) && (musica.volume != 0.1)) {
-                    musica.volume -= 0.1;
+                if ((object[1].children[2].currentTime >= fadePoint) && (object[1].children[2].volume != 0.1)) {
+                    object[1].children[2].volume -= 0.1;
                     clearInterval(fadeAudio);
                 }
-                else if(musica.volume === 0.1) {
+                else if(object[1].children[2].volume === 0.1) {
                     clearInterval(fadeAudio);
                 }
             }, 200);
         }
         
+        //ASIGNAR NOMBRE
         (function(){
             //Nombre de las canciones 
-            var m = $(nombre).attr('src').lastIndexOf("/");
-            var nArchivo = $(nombre).attr('src').slice(m + 1,-4);
+            var m = $(object[1].children[2].children[0]).attr('src').lastIndexOf("/");
+            var nArchivo = $(object[1].children[2].children[0]).attr('src').slice(m + 1,-4);
         
             object[1].children[1].innerHTML = nArchivo;
+            //Reset progreso
+            object[1].children[5].children[0].style.width = 0;
         })();
     });
 
