@@ -1,11 +1,11 @@
 (function reproductor(){
 
-    var track = document.getElementsByClassName("objAudio");
+    var track = document.getElementsByClassName("track");
 
     Object.entries(track).map(( object ) => {
 
-        console.log(object);
-
+        //console.log(object);
+        //VARIABLES DE DURACION Y REPRODUCCIÓN
         var segs = 5;
         var reproduce = false;
 
@@ -16,13 +16,13 @@
                 object[1].children[2].play();
                 reproduce = reproduce ? false : true;
                 $( object[1].children[0] ).attr("class", "btn-play fas fa-pause-circle");
-                console.log(reproduce);
+                //console.log(reproduce);
             } 
             else if(reproduce) {
                 object[1].children[2].pause();
                 reproduce = reproduce ? false : true;
                 $( object[1].children[0] ).attr("class", "btn-play fas fa-play-circle");
-                console.log(reproduce);
+                //console.log(reproduce);
             }
         
         };
@@ -65,7 +65,7 @@
                 return minutes + ":" + tiempo;
             }
             
-            // Duracion
+            // DURACIÓN
             object[1].children[3].children[0].innerHTML = formatTime(tiempo);
             object[1].children[3].children[1].innerHTML = formatTime(segs);
             object[1].children[2].setAttribute('data-time', segs);
@@ -104,7 +104,7 @@
             }, 200);
         }
         
-        //ASIGNAR NOMBRE
+        //ASIGNAR NOMBRE DE ARCHIVO
         (function(){
             //Nombre de las canciones 
             var m = $(object[1].children[2].children[0]).attr('src').lastIndexOf("/");

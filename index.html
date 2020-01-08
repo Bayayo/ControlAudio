@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Audio</title>
+    <meta name="description" content="funcion para reproductor sencillo con duracion editable"/>
+    <title>Reproductor</title>
 
     <link rel="stylesheet" type="text/css" href="css/track.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
@@ -14,6 +15,32 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.0.4/gsap.min.js"></script>
 
+    <style>
+    /****************************************/
+        *{
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        header{
+            height: 2%;
+            background-color: #3F51B5;
+            padding: 1%;
+            text-transform: uppercase;
+            font-weight: bold;
+            text-align: center;
+            color: #d2d2d2;
+            margin-bottom: 30px;
+        }
+
+        .contenedor{
+            background-color: #f7f7f7;
+            padding: 0.5em;
+            margin: 0 4%;
+            height: 26vw;
+        }
+
+    </style>
+
 </head>
 <body>
 
@@ -21,32 +48,32 @@
 
     <div class="contenedor">
 
-        <div class="objAudio" >
+        <div class="track">
             <div class="btn-play fas fa-play-circle"></div>
             <div class="cancion"></div>
-            <audio preload="none" id="player">
+            <audio preload="none">
                     <source src="./audio/Joe Satriani - Jumpin' Out.mp3" type="audio/mpeg">
             </audio>
             <div class="tiempos"><span>00:00</span> / <span>00:00</span></div>
             <div class="btn-stop far fa-stop-circle"></div>
-            <div class="progreso"><div id="progreso"></div></div>
+            <div class="progreso"><div></div></div>
         </div>
 
-        <div class="objAudio" >
+        <div class="track">
                 <div class="btn-play fas fa-play-circle"></div>
                 <div class="cancion"></div>
-                <audio preload="none" id="player">
+                <audio preload="none">
                         <source src="./audio/Rush - Fly by night.mp3" type="audio/mpeg">
                 </audio>
                 <div class="tiempos"><span>00:00</span> / <span>00:00</span></div>
                 <div class="btn-stop far fa-stop-circle"></div>
-                <div class="progreso"><div id="progreso"></div></div>
+                <div class="progreso"><div></div></div>
         </div>
 
     </div>
     
 </body>
-    <script src="./js/main.js"></script>
+    <script src="./js/reproductor.js"></script>
 </html>
 
 
