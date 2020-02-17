@@ -36,7 +36,7 @@
             $( object[1].children[0] ).attr("class", "btn-play fas fa-play-circle");
             object[1].children[2].volume =  1;
             object[1].children[2].pause();
-            object[1].children[2].currentTime = 0;g
+            object[1].children[2].currentTime = 0;
             object[1].children[5].children[0].style.width = 0;
         
         };
