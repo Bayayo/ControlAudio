@@ -6,8 +6,9 @@
 
         //console.log(object);
         //VARIABLES DE DURACION Y REPRODUCCIÓN
-        var segs = 5;
+        var segs = 25;
         var reproduce = false;
+       
 
         //PLAY
         object[1].children[0].onclick = function() { 
@@ -35,7 +36,7 @@
             $( object[1].children[0] ).attr("class", "btn-play fas fa-play-circle");
             object[1].children[2].volume =  1;
             object[1].children[2].pause();
-            object[1].children[2].currentTime = 0;
+            object[1].children[2].currentTime = 0;g
             object[1].children[5].children[0].style.width = 0;
         
         };
@@ -73,7 +74,7 @@
             if (tiempo > 0) {
                 object[1].children[5].children[0].style.width = ((object[1].children[2].currentTime / segs )*100) + "%";
             }
-            if (tiempo >= segs - 2) {
+            if (tiempo >= segs - 3) {
                 Fade();
             } 
             if (tiempo > segs ) {
@@ -91,17 +92,17 @@
         //FADE
         function Fade () {
         
-            var fadePoint = segs - 2.5; 
-        
+            var fadePoint = segs - 3; 
             var fadeAudio = setInterval(function () {
                 if ((object[1].children[2].currentTime >= fadePoint) && (object[1].children[2].volume != 0.1)) {
-                    object[1].children[2].volume -= 0.1;
+                    object[1].children[2].volume -= 0.08;
+                    clearInterval(fadeAudio);
+                    console.log("Tiempo: " + object[1].children[2].currentTime +  " , Volumen: " + object[1].children[2].volume + " || FADE:" + fadePoint);
+                }
+                else if(object[1].children[2].volume === 0.08 || object[1].children[2].volume >= 0.07) {
                     clearInterval(fadeAudio);
                 }
-                else if(object[1].children[2].volume === 0.1) {
-                    clearInterval(fadeAudio);
-                }
-            }, 200);
+            }, 100);
         }
         
         //ASIGNAR NOMBRE DE ARCHIVO
